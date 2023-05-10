@@ -17,13 +17,16 @@ if (isset($_GET['id'])) {
     $sql = "SELECT * FROM Information WHERE ID = $id";
     $result = mysqli_query($conn, $sql);
     $row = mysqli_fetch_assoc($result);
-
+    
     // Step 2: Delete the record from the database.
-    $sql = "DELETE FROM Information WHERE ID = $id";
-    mysqli_query($conn, $sql);
+    $delete_rec = "DELETE FROM Information WHERE ID = $id";
+    $obj = mysqli_query($conn, $delete_rec);
+    echo $obj;
+    
 
     // Step 3: Select all records from the table with IDs greater than the deleted record's ID.
     $sql = "SELECT * FROM Information WHERE ID > $id";
+    $sql = "SELECT * FROM Information";
     $result = mysqli_query($conn, $sql);
 
     // Step 4: Decrement the IDs of each selected record by 1.
@@ -33,7 +36,18 @@ if (isset($_GET['id'])) {
         // Step 5: Update the IDs of the selected records in the database.
         $sql = "UPDATE Information SET ID = $new_id WHERE ID = " . $row['ID'];
         mysqli_query($conn, $sql);
+
+//         // Step 6: Get the maximum ID value and increment it by 1.
+// $sql = "SELECT MAX(ID) AS max_id FROM Information";
+// $result = mysqli_query($conn, $sql);
+// $row = mysqli_fetch_assoc($result);
+// $new_id = $row['max_id'] + 1;
+
+// // Step 7: Insert the new record with the new ID value.
+// $sql = "INSERT INTO Information (ID, Name, Email, Password) VALUES ($new_id, 'John Doe', 'john@example.com', 'password')";
+// mysqli_query($conn, $sql);
     }
+    
 }
 
 header("location:listing.php");
