@@ -11,6 +11,8 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
 </head>
 
 <body>
@@ -44,8 +46,19 @@
 
     $result = mysqli_query($conn, $query);
     if ($result) {
-        echo "Record updated successfully";
-        header("location:listing.php");
+     
+     echo '<script>
+     Swal.fire({
+         title: "Success",
+         text: "Your record has been updated",
+         icon: "success",
+         confirmButtonText: "OK"
+     }).then(function() {
+         window.location.href = "listing.php";
+     });
+ </script>';
+ 
+        
     }
      else {
         echo "Error updating record: " . mysqli_error($conn);
